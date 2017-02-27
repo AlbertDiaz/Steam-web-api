@@ -7,7 +7,7 @@ function bindButtons(){
     var req = new XMLHttpRequest();
     var payload = {steamId64:null};
     payload.steamId64 = document.getElementById('steamId64').value;
-    req.open('GET', 'http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=' + apiKey + '&steamids=' + payload.steamId64, true);
+    req.open('GET', 'https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=' + apiKey + '&steamids=' + payload.steamId64, true);
     //req.setRequestHeader('Content-Type', 'application/json');
     req.send(null);
     req.addEventListener('load',function(){
