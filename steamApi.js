@@ -14,7 +14,7 @@ function bindButtons(){
     if(req.status >= 200 && req.status < 400){
       var response = JSON.parse(req.responseText);
       console.log(JSON.parse(req.responseText));
-      document.getElementById('gamerTag').textContent = response.players[0].personaname;
+      document.getElementById('gamerTag').textContent = response.players[1].personaname;
       document.getElementById('steamId64').textContent = response.players[0].steamid;
       document.getElementById('country').textContent = response.players[0].loccountrycode;
       document.getElementById('profileUrl').textContent = response.players[0].profileurl;
