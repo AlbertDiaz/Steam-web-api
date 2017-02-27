@@ -26,6 +26,7 @@
             <li><a href="#three">Steam Web API Key</a></li>
             <li><a href="#four">Obtaining a Steam Web API Key</a></li>
             <li><a href="#five"></a></li>
+            <li><a href="example">GetPlayerSummaries Example</a></li>
           </ol>
 
           <h2 id="one">1. What is an API?</h2>
@@ -77,10 +78,28 @@
           <p><img src="images/register_apikey2.png"></p>
           <p>Alright! We are one step closer to being able to use Steam's Web API</p>
 
+          <h2 id="example">GetPlayerSummaries Example</h2>
+            <form>
+              <fieldset>
+                <legend>Steam User Summary</legend>
+                <label for="steamId64">Steam ID 64</label>
+                <input type="text" name="steamId64" id="steamId64">
+                <input type="submit" id="steamSubmit">
+              </fieldset>
+            </form>
+          <div>
+            <h5>Results</h5>
+            <ul>
+              <li><span>Gamer Tag:  </span><span id="gamerTag"></span></li>
+              <li><span>Steam ID 64:  </span><span id="steamId64"></span></li>
+              <li><span>Country: </span><span id="country"></span></li>
+              <li><span>Profile URL: </span><span id="profileUrl"></span></li>
+            </ul>
+          </div>
           <h2 id="references">References</h2>
 
       </div>
     </div>
-    <script></script>
+    <script src="steamApi.js"></script>
   </body>
 </html>
