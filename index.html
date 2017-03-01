@@ -12,21 +12,25 @@
     <!-- FONT 
     <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">-->
     <!-- CSS -->
-    <link rel="stylesheet" href="normalize.css">
-    <link rel="stylesheet" href="skeleton.css">
+    <link rel="stylesheet" href="public/normalize.css">
+    <link rel="stylesheet" href="public/skeleton.css">
   </head>
   <body>
     <div class="container">
       <div class="row">
-          <h1>How-To Guide for the Steam Web API <img style="vertical-align: -25px" src="images/steam_logo.png" width="100" /></h1>
+          <h1>How-To Guide for the Steam Web API <img style="vertical-align: -25px" src="public/images/steam_logo.png" width="100" /></h1>
           <h2>Contents</h2>
           <ol>
             <li><a href="#one">What is an API?</a></li>
             <li><a href="#two">Steam Web API</a></li>
             <li><a href="#three">Steam Web API Key</a></li>
             <li><a href="#four">Obtaining a Steam Web API Key</a></li>
-            <li><a href="#five"></a></li>
-            <li><a href="#example">GetPlayerSummaries Example</a></li>
+            <li><a href="#five">Steam API Documentation</a></li>
+            <li><a href="#six">HTTP Request Format</a></li>
+            <li><a href="#seven">JSON Response</a></li>
+            <li><a href="#eight">Integration of API</a></li>
+            <li><a href="#nine">GetPlayerSummaries Example</a></li>
+            <li><a href="#ten">Conclusion</a></li>
           </ol>
 
           <h2 id="one">1. What is an API?</h2>
@@ -65,20 +69,24 @@
           <p>Step 1. Go to the <a href="http://steamcommunity.com/dev" target="_blank">Steam Web API Documentation</a> page.</p>
 
           <p>Step 2. Click on the hyperlinked words "by filling out this form" as shown in the image below.</p>
-          <p><img src="images/steam_web_dev_key.png"></p>
+          <p><img src="public/images/steam_web_dev_key.png"></p>
 
           <p>Step 3. Log on to your Steam account or Create a new account.</p>
-          <p><img src="images/steam_login.png"></p>
+          <p><img src="public/images/steam_login.png"></p>
 
           <p>Step 4. Enter your domain into the text field, agree to the Terms of Use, and click the Register button.</p>
-          <p><img src="images/register_api.png"></p>
-          <p><img src="images/register_two.PNG"></p>
+          <p><img src="public/images/register_api.png"></p>
+          <p><img src="public/images/register_two.PNG"></p>
 
           <p>Step 5. Save and protect your registered API key</p>
-          <p><img src="images/register_apikey2.png"></p>
+          <p><img src="public/images/register_apikey2.png"></p>
           <p>Alright! We are one step closer to being able to use Steam's Web API</p>
 
-          <h2 id="example">GetPlayerSummaries Example</h2>
+          <h2 id="five">Steam API Documentation</h2>
+          <h2 id="six">HTTP Request Format</h2>
+          <h2 id="seven">JSON Response</h2>
+          <h2 id="eight">Integration of API</h2>
+          <h2 id="nine">GetPlayerSummaries Example</h2>
             <form>
               <fieldset>
                 <label for="steamId64">Enter Steam ID 64</label>
@@ -95,6 +103,7 @@
               <li><span>Profile URL: </span><span id="profileUrl"></span></li>
             </ul>
           </div>
+          <h2 id="ten">Conclusion</h2>
           <h2 id="references">References</h2>
 
       </div>
