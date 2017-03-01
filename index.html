@@ -34,57 +34,145 @@
           </ol>
 
           <h2 id="one">1. What is an API?</h2>
-          <p>The million dollar question: What is an API?  API stands for Application Programming Interface and can be defined as a system of tools and resources that enable developers to create software applications.  Here is another definition: </p>
+            <p>The million dollar question: What is an API?  API stands for Application Programming Interface and can be defined as a system of tools and resources that enable developers to create software applications.  Here is another definition: </p>
 
-          <p><i>In computer programming, an application programming interface (API) is a set of subroutine definitions, protocols, and tools for building application software. In general terms, it's a set of clearly defined methods of communication between various software components. A good API makes it easier to develop a computer program by providing all the building blocks, which are then put together by the programmer. An API may be for a web-based system, operating system, database system, computer hardware, or software library. An API specification can take many forms, but often includes specifications for routines, data structures, object classes, variables, or remote calls.</i>- <a href="https://en.wikipedia.org/wiki/Application_programming_interface" target="_blank">Wikipedia</a></p>
+            <p><i>In computer programming, an application programming interface (API) is a set of subroutine definitions, protocols, and tools for building application software. In general terms, it's a set of clearly defined methods of communication between various software components. A good API makes it easier to develop a computer program by providing all the building blocks, which are then put together by the programmer. An API may be for a web-based system, operating system, database system, computer hardware, or software library. An API specification can take many forms, but often includes specifications for routines, data structures, object classes, variables, or remote calls.</i>- <a href="https://en.wikipedia.org/wiki/Application_programming_interface" target="_blank">Wikipedia</a></p>
 
-          <p>Get it now?  Think of an API as a waiter in a restuarant.  In a restaurant, you (the developer) are the customer with a menu of options to order from, and the kitchen is the system that executes your order.  However, there must be a way to handle and send your order to the kitchen, and return the food to you.  This is where the API comes into play.  The API is the waiter that handles all the responses and requests between the customer and the kitchen.  The customer does not need to know how the food was cooked or the ingredients in the food.  The kitchen is a "black box" in that aspect.  All the customer needs to understand is that orders are made through the waiters.  Also don't forget to leave a good tip ;).</p>
+            <p>Get it now?  Think of an API as a waiter in a restuarant.  In a restaurant, you (the developer) are the customer with a menu of options to order from, and the kitchen is the system that executes your order.  However, there must be a way to handle and send your order to the kitchen, and return the food to you.  This is where the API comes into play.  The API is the waiter that handles all the responses and requests between the customer and the kitchen.  The customer does not need to know how the food was cooked or the ingredients in the food.  The kitchen is a "black box" in that aspect.  All the customer needs to understand is that orders are made through the waiters.  Also don't forget to leave a good tip ;).</p>
 
-          <p>The API is the messenger that takes requests and tells the system what you want to do.  Then it returns the response back to you.</p>
+            <p>The API is the messenger that takes requests and tells the system what you want to do.  Then it returns the response back to you.</p>
 
           <h2 id="two">2. Steam Web API</h2>
-          <p>Steam's Web API is an HTTP based API that has the ability to access various features of Steam.  The API contains both public and protected methods depending on the intended use.</p>
-          
-          <p>The following uses are examples of when a protected method would be used:</p>
-          <ul>
+            <p>Steam's Web API is an HTTP based API that has the ability to access various features of Steam.  The API contains both public and protected methods depending on the intended use.</p>
+            
+            <p>The following uses are examples of when a protected method would be used:</p>
+            <ul>
 
-            <li>Retreiving a user's stats for a game</li>
-            <li>Retreiving a user's list of played games</li>
-            <li>Retreiving the ban statuses for given players</li>
-          </ul>
+              <li>Retreiving a user's stats for a game</li>
+              <li>Retreiving a user's list of played games</li>
+              <li>Retreiving the ban statuses for given players</li>
+            </ul>
 
-          <p>The Steam Web API is accessed by making HTTP/HTTPS requests to <code>api.steampowered.com</code>.</p>
-          <p>Here is the general format of each API request: <code>http://api.steampowered.com/[interface]/[method]/[method_version]/</code></p>
+            <p>The Steam Web API is accessed by making HTTP/HTTPS requests to <code>api.steampowered.com</code>.</p>
+            <p>Here is the general format of each API request: <code>http://api.steampowered.com/[interface]/[method]/[method_version]/</code></p>
 
           <h2 id="three">3. Steam Web API Key</h2>
-          <p>Before we can begin using Steam's Web API we will need to obtain an API key.  The API key is a code passed by computer programs calling an application programming interface to identify the calling program, its developer, or its user to the Web site.  For Steam's Web API, the API key is generally required when attempting to pull information related to a user.  For example, let's take a look at the GetPlayerSummaries API.</p>
+            <p>Before we can begin using Steam's Web API we will need to obtain an API key.  The API key is a code passed by computer programs calling an application programming interface to identify the calling program, its developer, or its user to the Web site.  For Steam's Web API, the API key is generally required when attempting to pull information related to a user.  For example, let's take a look at the GetPlayerSummaries API.</p>
 
-          <p>GetPlayerSummaries:
-          <code>http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=XXXXXXXXXXXXXXXXXXXXXXX&steamids=76561197960435530</code></p>
+            <p>GetPlayerSummaries:
+            <code>http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=XXXXXXXXXXXXXXXXXXXXXXX&steamids=76561197960435530</code></p>
 
-          <p>In the URL above, there is a name value pair with 'key' as the name and 'XXXXXXXXXXXXXXXXXXXXXXX' would be replaced with the API key.  This API returns the basic profile information for a list of 64-bit Steam IDs, but it requires the use of a registered API key to be used. This information is unique to the user is connected to a specific account.  Because of this, it is important to keep this information private.</p>
+            <p>In the URL above, there is a name value pair with 'key' as the name and 'XXXXXXXXXXXXXXXXXXXXXXX' would be replaced with the API key.  This API returns the basic profile information for a list of 64-bit Steam IDs, but it requires the use of a registered API key to be used. This information is unique to the user is connected to a specific account.  Because of this, it is important to keep this information private.</p>
 
           <h2 id="four">4. Obtaining a Steam Web API Key</h2>
-          <p>Now that we know what an API key is and what it's used for, let's learn how to obtain one.</p>
-          <p>Step 1. Go to the <a href="http://steamcommunity.com/dev" target="_blank">Steam Web API Documentation</a> page.</p>
+            <p>Now that we know what an API key is and what it's used for, let's learn how to obtain one.</p>
+            <p>Step 1. Go to the <a href="http://steamcommunity.com/dev" target="_blank">Steam Web API Documentation</a> page.</p>
 
-          <p>Step 2. Click on the hyperlinked words "by filling out this form" as shown in the image below.</p>
-          <p><img src="public/images/steam_web_dev_key.png"></p>
+            <p>Step 2. Click on the hyperlinked words "by filling out this form" as shown in the image below.</p>
+            <p><img src="public/images/steam_web_dev_key.png"></p>
 
-          <p>Step 3. Log on to your Steam account or Create a new account.</p>
-          <p><img src="public/images/steam_login.png"></p>
+            <p>Step 3. Log on to your Steam account or Create a new account.</p>
+            <p><img src="public/images/steam_login.png"></p>
 
-          <p>Step 4. Enter your domain into the text field, agree to the Terms of Use, and click the Register button.</p>
-          <p><img src="public/images/register_api.png"></p>
-          <p><img src="public/images/register_two.PNG"></p>
+            <p>Step 4. Enter your domain into the text field, agree to the Terms of Use, and click the Register button.</p>
+            <p><img src="public/images/register_api.png"></p>
+            <p><img src="public/images/register_two.PNG"></p>
 
-          <p>Step 5. Save and protect your registered API key</p>
-          <p><img src="public/images/register_apikey2.png"></p>
-          <p>Alright! We are one step closer to being able to use Steam's Web API</p>
+            <p>Step 5. Save and protect your registered API key</p>
+            <p><img src="public/images/register_apikey2.png"></p>
+            <p>Alright! We are one step closer to being able to use Steam's Web API</p>
 
           <h2 id="five">Steam API Documentation</h2>
+            <p>The <a href="https://developer.valvesoftware.com/wiki/Steam_Web_API">Steam API Wiki</a> serves as a good resource for finding information on the different interfaces and methods available. There you will be able to find out the required arguments and resulting data for each method.</p>
+
+            <p><img src="public/images/steam_api_wiki.PNG"></p>
+
+            <p>Taking a look at GetPlayerSummaries, we can see that there is some good information about the required arguments for the method and what information we can expect to get back.  It also tells you what different values may indicate. For example, the 'personastate' will be a value between 0-6.  0 indicates that the user is offline, 1 indicates that the user is online, 2 indicates that the user is busy, etc.  Knowing this, you will be able to decide and determine how you would like to implement this for your application.
+
+            <p><img src="public/images/getplayerSummaries.PNG"></p>
+
           <h2 id="six">HTTP Request Format</h2>
+
           <h2 id="seven">JSON Response</h2>
+              <pre>   
+              {
+                "response": {
+                  "players": [
+                    {
+                    "steamid": "76561197991209043",
+                    "communityvisibilitystate": 3,
+                    "profilestate": 1,
+                    "personaname": "Arubāto",
+                    "lastlogoff": 1488259851,
+                    "profileurl": "http://steamcommunity.com/id/arubato-san/",
+                    "avatar": "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/b0/b06db26b73c9c9a540c025a1289e3190b4118fba.jpg",
+                    "avatarmedium": "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/b0/b06db26b73c9c9a540c025a1289e3190b4118fba_medium.jpg",
+                    "avatarfull": "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/b0/b06db26b73c9c9a540c025a1289e3190b4118fba_full.jpg",
+                    "personastate": 0,
+                    "primaryclanid": "103582791431177624",
+                    "timecreated": 1184589320,
+                    "personastateflags": 0,
+                    "loccountrycode": "US"
+                    }
+                  ]               
+                }
+              }
+              </pre>
+              <h4>Example:</h4>
+              <center>
+                <div>
+                  <h5>Steam Profile</h5>
+                    <span id="gamerTag"></span><br />
+                    <img id="avatar" src=""><br />
+                    <span id="profileUrl"></span><br />
+                    <span id="location"></span>
+                </div>
+              </center>
+
+              <pre>
+              window.onload = function(){
+
+              var steamProfile = {
+                "response": {
+                  "players": [{
+                    "steamid": "76561197991209043",
+                    "communityvisibilitystate": 3,
+                    "profilestate": 1,
+                    "personaname": "Arubāto",
+                    "lastlogoff": 1488259851,
+                    "profileurl": "http://steamcommunity.com/id/arubato-san/",
+                    "avatar": "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/b0/b06db26b73c9c9a540c025a1289e3190b4118fba.jpg",
+                    "avatarmedium": "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/b0/b06db26b73c9c9a540c025a1289e3190b4118fba_medium.jpg",
+                    "avatarfull": "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/b0/b06db26b73c9c9a540c025a1289e3190b4118fba_full.jpg",
+                    "personastate": 0,
+                    "primaryclanid": "103582791431177624",
+                    "timecreated": 1184589320,
+                    "personastateflags": 0,
+                    "loccountrycode": "US"
+                  }]
+                }
+              }
+
+              var gamerTag = steamProfile.response.players[0].personaname; // assigns JSON property, personaname, to personaName
+              console.log(gamerTag); // displays "Arubāto" to console
+              document.getElementById('gamerTag').innerHTML = gamerTag; //sends gamerTag to html
+              
+              var avatar = steamProfile.response.players[0].avatarmedium; // assigns JSON property, avatarmedium, to avatar
+              console.log(avatar); // displays the image source to console
+              document.getElementById('avatar').src = avatar; //sends avatar image source to html
+              
+              var profileUrl = steamProfile.response.players[0].profileurl; // assigns JSON property, profileurl, to personaName
+              console.log(profileUrl); // displays "http://steamcommunity.com/id/arubato-san/" to console
+              document.getElementById('profileUrl').innerHTML = profileUrl;//sends profileUrl to html
+
+              var country = steamProfile.response.players[0].loccountrycode; // assigns JSON property, loccountrycode, to personaName
+              console.log(country); // displays "US" to console
+              document.getElementById('location').innerHTML = country; //sends country to html
+              }
+              </pre>
+
+              <script src="json.js"></script>
+
           <h2 id="eight">Integration of API</h2>
           <h2 id="nine">GetPlayerSummaries Example</h2>
             <form>
@@ -108,6 +196,6 @@
 
       </div>
     </div>
-    <script src="steamApi.js"></script>
+    <!--<script src="steamApi.js"></script>-->
   </body>
 </html>
