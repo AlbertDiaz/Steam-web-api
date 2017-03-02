@@ -93,6 +93,9 @@
           <h2 id="six">6. HTTP Request Format</h2>
 
           <h2 id="seven">7. JSON Response</h2>
+          <p>So what is JSON?<br />
+          "JSON or JavaScript Object Notation is a lightweight data-interchange format. It is easy for humans to read and write, easy for machines to parse and generate." - <a href="http://www.json.org" target="_blank">json.org</a><br/ >
+          Once the received JSON has been parsed it becomes a collection of name/value pairs and can be accessed once it is assigned to a variable.  The JSON response below is what is returned by the <code>GetPlayerSummaries</code> API call.  You can see that <code>"response"</code> is the primary object that has a value of <code>"players"</code>.  However, <code>"players"</code> is an array of even more name/value pairs that is able to be accessed.  Now that we've seen what the API will return, let's go put it to use.</p>
               <pre>   
               {
                 "response": {
@@ -121,6 +124,7 @@
 
 
           <h2 id="eight">8. GetPlayerSummaries (v0002) Example</h2>
+          <p>Below is an example of putting the JSON response to use.  Here 5 of the 14 pieces of information from the JSON response are being used: personaname, profileurl, avatarmedium, personastate, and loccountrycode.  Let's explain the code a bit...</p>
               <center>
                 <div>
                   <h5>Steam Profile</h5>
@@ -131,6 +135,11 @@
                     <span id="location"></span>
                 </div>
               </center>
+
+            <h5>HTML:</h5>
+            <p>As you can see this is just some simple HTML using the spans tag and image tag with individual ids to place the information we will pass via JavaScript.<br />
+            For example, the json.js file which we will explain in a little bit will call <code>document.getElementById('gamerTag').innerHTML = someValue;</code> and find where it is going to place the value by id.  In this case it will be in <code>&ltspan id="gamerTag"&gt&lt/span&gt</code>.</p>
+
             <pre>
               &ltcenter&gt
                 &ltdiv&gt
@@ -143,6 +152,27 @@
                 &lt/div&gt
               &lt/center&gt
             </pre>  
+            <h5>JavaScript:</h5>
+            <p>Okay, below is the JavaScript code that uses the JSON response, pulls desired information, and sends it to the HTML page.  So let's break it down.</p>
+
+            <p><code>window.onload = function(){}</code><br />
+            This assigns a function call and the code within it will be executed upon the loading of the window</p>
+
+            <p><code>var steamProfile = {JSON Object};</code><br />
+            In order to access the JSON Object, it is assigned to a variable 'steamProfile'.  However, it is still not entirely useful.  We want to access specific elements not just the JSON object as a whole.</p>
+
+            <p><code>var num = steamProfile.response.players[0].personastate;</code><br />
+            Now we're getting somewhere.  Here we are able to access the specific element 'personastate' and assign it to another variable 'num' which we will use in just a sec.  Before I do that, i'd like to explain further how to access this object.  As you can see the variable we are accessing is 'steamProfile'.  Then we use the dot ('.') notation to access 'response'.  Once we get to 'players' we will use brackets ([ ]) to access a specific element like so, 'players[0]'.  You may ask why we are calling '[0]', the first element in the array.  Well if you look close enough 'players' only contains one element which is in turn our list of name/value pairs.  Attempting to call 'steamProfile.response.players[10]' to access the 'personastate' would cause an error.  Finally, we can now call the specific item in the element and obtain it's value.</p>  
+
+            <p><code>console.log(num + ' = ' + status[num]);</code><br />
+            This is just a simple console.log call to help illustrate the ability to extract information from a JSON object.  If you open up the developer tools for your specific browser and view the console, you should see <code>0 = Offline</code> logged.
+
+            <p><code>document.getElementById('status').innerHTML = status[num];</code><br />
+            The last step in this code is to take the newly obtained values and send it to the HTML page to be displayed.  Here we use the HTML DOM getElementByID() method.  This will return the assigned value to the element that has the ID of 'status' and will send it as HTML content with the .innerHTML property.</p>
+
+            <p><code>var status = ["Offline", "Online", "Busy", "Away", "Looking to trade", "Looking to play"];</code><br />
+            You may have noticed that the value that was assigned was 'status[num]', but the value obtained from the JSON object was assigned to 'num' itself.  Being the good Web Developer I am, I read the documentation for this specific API call and learned that each integer value has a specific meaning.  So I created an array of strings with each string placed in the position equal to it's defined integer value, and the value of num will determine which string to display.
+
             <pre>
               window.onload = function(){
 
