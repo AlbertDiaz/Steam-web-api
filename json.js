@@ -25,7 +25,7 @@ var gamerTag = steamProfile.response.players[0].personaname; // assigns JSON pro
 console.log(gamerTag); // displays "Arubāto" to console
 document.getElementById('gamerTag').innerHTML = gamerTag; //sends gamerTag to html
 
-var status = {"Offline", "Online", "Busy", "Away", "Looking to trade", "Looking to play"};
+var status = ["Offline", "Online", "Busy", "Away", "Looking to trade", "Looking to play"];
 var num = steamProfile.response.players[0].personastate; //assigns JSON property, personastate, to status
 console.log(num + ' = ' + status[num]); // displays status to console
 document.getElementById('status').innerHTML = status[num];
