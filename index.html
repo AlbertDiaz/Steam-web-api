@@ -208,7 +208,7 @@
 
               app.get('/',function(req,res,next){
                 var context = {};
-                request('http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=' + credentials.key + '&steamids=76561197991209043', function(err, response, body){
+                request('https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=' + credentials.key + '&steamids=76561197991209043', function(err, response, body){
                   if(!err && response.statusCode < 400){
                     context.stm = body;
                     res.render('home',context);
@@ -370,7 +370,7 @@
           <h2 id="nine">9. Conclusion</h2>
           <p>And that is all there is too it...<br />
           We have gone over the basics of APIs, JSON, AJAX, Steam's API Documentation and requirements, and even some methods for use.  Now you have the basic tools necessary to build some awesome applications. Good luck!</p>
-          
+
           <script src="json.js"></script>
       </div>
     </div>
