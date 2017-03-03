@@ -68,29 +68,176 @@
             <p>Step 1. Go to the <a href="http://steamcommunity.com/dev" target="_blank">Steam Web API Documentation</a> page.</p>
 
             <p>Step 2. Click on the hyperlinked words "by filling out this form" as shown in the image below.</p>
-            <p><img src="public/images/steam_web_dev_key.png"></p>
+            <center>
+              <p>
+                Figure 1 - Steam Web API Page<br />
+                <img src="public/images/steam_web_dev_key.png">
+              </p>
+            </center>
 
             <p>Step 3. Log on to your Steam account or Create a new account.</p>
-            <p><img src="public/images/steam_login.png"></p>
+            <center>
+              <p>
+                Figure 2 - Steam Login<br />
+                <img src="public/images/steam_login.png">
+              </p>
+            </center>
 
             <p>Step 4. Enter your domain into the text field, agree to the Terms of Use, and click the Register button.</p>
-            <p><img src="public/images/register_api.png"></p>
-            <p><img src="public/images/register_two.png"></p>
+            <center>
+              <p>
+                Figure 3 - Register Web API Key<br />
+                <img src="public/images/register_api.png">
+              </p>
+              <p>
+                Figure 4 - Register Web API Key with Domain Name<br />
+                <img src="public/images/register_two.png">
+              </p>
+            </center>
 
             <p>Step 5. Save and protect your registered API key</p>
-            <p><img src="public/images/register_apikey2.png"></p>
+            <center>
+              <p>
+                Figure 5 - Steam Web API Key<br />
+                <img src="public/images/register_apikey2.png">
+              </p>
+            </center>
+
             <p>Alright! We are one step closer to being able to use Steam's Web API</p>
 
           <h2 id="five">5. Steam API Documentation</h2>
             <p>The <a href="https://developer.valvesoftware.com/wiki/Steam_Web_API">Steam API Wiki</a> serves as a good resource for finding information on the different interfaces and methods available. There you will be able to find out the required arguments and resulting data for each method.</p>
 
-            <p><img src="public/images/steam_api_wiki.PNG"></p>
+            <center>
+              <p>
+                Figure 6 - Steam API Wiki<br />
+                <img src="public/images/steam_api_wiki.PNG">
+              </p>
+            </center>
 
             <p>Taking a look at GetPlayerSummaries, we can see that there is some good information about the required arguments for the method and what information we can expect to get back.  It also tells you what different values may indicate. For example, the 'personastate' will be a value between 0-6.  0 indicates that the user is offline, 1 indicates that the user is online, 2 indicates that the user is busy, etc.  Knowing this, you will be able to decide and determine how you would like to implement this for your application.
 
-            <p><img src="public/images/getPlayerSummaries.PNG"></p>
+            <center>
+              <p>
+                Figure 7 - GetPlayerSummaries Overview
+                <img src="public/images/getPlayerSummaries.PNG">
+              </p>
+            </center>
 
           <h2 id="six">6. HTTP Request Format</h2>
+          <p>Now that we've reviewed some of the API calls that can be performed.  Let's put one into action!  The code below you will see some AJAX code to retrieve data from a location specified by our HTTP call.</p>
+          <p>What is AJAX?  AJAX stands for Asynchronous JavaScript and XML.  In this code, it essentialy is our use of <code>XMLHttpRequest()</code>.  We will use it to communicate to server-side scripts for the sending and receiving of information.  Don't be fooled by the name.  It doesn't only work with XML, but also JSON, HTML, and plain text files.</p>
+
+          <p>Back to the code.  I will only explain a few things here because there will be a point I want to get to.  This code will uses Document Object Model to interface with the HTML document.  Once a 'click' event occurs from an element with the ID of 'steamSubmit' the rest of the code in this body will execute.</p>
+
+          <p><code>var req = new XMLHttpRequest();</code><br />
+          In order to use the XMLHTTPRequest() object, we have to assign it to a variable.  In this case, the variable is 'req'.  Now it's properties are accessible.</p>
+
+          <p><code>req.open('GET', 'http://api.steampowered.com/IsteamUser/GetPlayerSummaries...', false);</code><br />
+          This is where the actual GET request occurs.  The first argument is 'GET' to indicate what kind of request it is and the second argument is the HTTP call provided from Steam.</p>
+
+          <p><code>var response = JSON.parse(req.responseText);</code><br />
+          Now the 'req.responseText' should be filled with the JSON response, and will get parsed and assigned to 'var response'.</p>
+
+          <p>Now for the gotcha...this doesn't actually work. Scroll down and see why...</p>
+
+            <pre>
+            function bindButtons(){
+              document.getElementById('steamSubmit').addEventListener('click', function(event){
+                var req = new XMLHttpRequest();
+                var payload = {steamId:null};
+                payload.steamId = document.getElementById('steamId').value;
+                req.open('GET', 'http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=' + apiKey + '&steamids=' + payload.steamId, true);
+                //req.setRequestHeader('Content-Type', 'application/json');
+                req.send(null);
+                req.addEventListener('load',function(){
+                if(req.status >= 200 && req.status < 400){
+                  var response = JSON.parse(req.responseText);
+                  console.log(JSON.parse(req.responseText));
+                  document.getElementById('gamerTag').textContent = response.players[0].personaname;
+                  document.getElementById('status').textContent = response.players[0].personastate;
+                  document.getElementById('country').textContent = response.players[0].loccountrycode;
+                }else{
+                  console.log("Error in network request: " + req.statusText);
+                }});
+                event.preventDefault();
+              })
+            }
+            </pre>
+
+            <p>If you tried to run this code, you would run into a problem regarding HTTP access control also known as CORS.  CORS stands for Cross-Origin Resource Sharing and and allows web servers  to perform secure cross-domain data transfers. The Access-Control-Allow-Origin header will specify certain domains that are allowed to perform cross-domain data transfers.  In this case, Access-Control-Allow-Orgin is set to null.  Therefore, data transfers between domains cannot be performed.  You can see the result of the execution of this code by pressing the submit button below and viewing your browser console or viewing Figure 8.</p>
+
+            <center>
+              <form>
+                <fieldset>
+                  <legend>GetPlayerSummaries</legend>
+                  <input type="text" name="steamId" id="steamId" placeholder="Steam ID 64">
+                  <input type="submit" id="steamSubmit">
+                </fieldset>
+              </form> 
+              <div>
+                <h5>Steam HTTP Request Results</h5>
+                  <span>Gamer Tag:  </span><span id="gamerTag1"></span><br />
+                  <span>Status:   </span><span id="status1"></span><br />
+                  <span>Country: </span><span id="country"></span><br />
+              </div>
+        
+              <br /><p>Figure 8 - Access-Control-Allow-Origin<br />
+              <img src="public/images/CORS.PNG">
+              </p>
+            </center>
+
+            <p>Alright, ready to use some code that actually works?</p>
+            <p>This code utilizes <a href="https://nodejs.org/en/">node.js</a> to execute some event driven I/O.  Now because this code will be executed by the server, it will act as the "client" and be able to access the resources from other servers.</p>
+            <p>So the first few lines of code set up the node packages for use by assigning them to variables, but the main part of this code is the <code>app.get()</code>.  For this specific instance, the app.get() will be executed when the base domain name of the website is called, and it is indicated this by the '/'.  If http://steamApi.com/ was the domain of that site and was called, the app.get() would be called.  Next, a funciton call with three arguments (req, res, next) is called and within that body is the <code>request()</code> call.</p>
+
+            <p><code>request('http://api.steampowered.com/ISteamUser/GetPlayerSummaries...', function(err, response, body){some code});</code><br />
+            Once this called the HTTP request is performed and obtains a response that is passed again to the next function call.  If the status code in the response is less than 400, than store the body (JSON object).  Otherwise there is an error that occured and a 404, 500, or some other error code was received.</p>   
+            
+            <pre>
+              var express = require('express');
+              var app = express();
+              var handlebars = require('express-handlebars').create({defaultLayout:'main'});
+              var credentials = require('./credentials.js');
+              var request = require('request');
+
+              app.engine('handlebars', handlebars.engine);
+              app.set('view engine', 'handlebars');
+              app.set('port', 3000);
+              app.use(express.static('public'));
+
+              app.get('/',function(req,res,next){
+                var context = {};
+                request('http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=' + credentials.key + '&steamids=76561197991209043', function(err, response, body){
+                  if(!err && response.statusCode < 400){
+                    context.stm = body;
+                    res.render('home',context);
+                  } else {
+                    console.log(err);
+                    if(response){
+                      console.log(response.statusCode);
+                    }
+                    next(err);
+                  }
+                });
+              });
+
+              app.use(function(req,res){
+                res.status(404);
+                res.render('404');
+              });
+
+              app.use(function(err, req, res, next){
+                console.error(err.stack);
+                res.status(500);
+                res.render('500');
+              });
+                         
+            </pre>
+
+            <p>So we looked at one method of performing an HTTP request from Steam's API, but what now you ask?  Now we can parse the data and actually use the JSON response.</p>
+
+            <script src="ajax.js"></script>
 
           <h2 id="seven">7. JSON Response</h2>
           <p>So what is JSON?<br />
@@ -137,9 +284,6 @@
               </center>
 
             <h5>HTML:</h5>
-            <p>As you can see this is just some simple HTML using the spans tag and image tag with individual ids to place the information we will pass via JavaScript.<br />
-            For example, the json.js file which we will explain in a little bit will call <code>document.getElementById('gamerTag').innerHTML = someValue;</code> and find where it is going to place the value by id.  In this case it will be in <code>&ltspan id="gamerTag"&gt&lt/span&gt</code>.</p>
-
             <pre>
               &ltcenter&gt
                 &ltdiv&gt
@@ -151,28 +295,11 @@
                     &ltspan id="location"&gt&lt/span&gt
                 &lt/div&gt
               &lt/center&gt
-            </pre>  
+            </pre>
+            <p>As you can see this is just some simple HTML using the spans tag and image tag with individual ids to place the information we will pass via JavaScript.<br />
+            For example, the json.js file which we will explain in a little bit will call <code>document.getElementById('gamerTag').innerHTML = someValue;</code> and find where it is going to place the value by id.  In this case it will be in <code>&ltspan id="gamerTag"&gt&lt/span&gt</code>.</p>  
+
             <h5>JavaScript:</h5>
-            <p>Okay, below is the JavaScript code that uses the JSON response, pulls desired information, and sends it to the HTML page.  So let's break it down.</p>
-
-            <p><code>window.onload = function(){}</code><br />
-            This assigns a function call and the code within it will be executed upon the loading of the window</p>
-
-            <p><code>var steamProfile = {JSON Object};</code><br />
-            In order to access the JSON Object, it is assigned to a variable 'steamProfile'.  However, it is still not entirely useful.  We want to access specific elements not just the JSON object as a whole.</p>
-
-            <p><code>var num = steamProfile.response.players[0].personastate;</code><br />
-            Now we're getting somewhere.  Here we are able to access the specific element 'personastate' and assign it to another variable 'num' which we will use in just a sec.  Before I do that, i'd like to explain further how to access this object.  As you can see the variable we are accessing is 'steamProfile'.  Then we use the dot ('.') notation to access 'response'.  Once we get to 'players' we will use brackets ([ ]) to access a specific element like so, 'players[0]'.  You may ask why we are calling '[0]', the first element in the array.  Well if you look close enough 'players' only contains one element which is in turn our list of name/value pairs.  Attempting to call 'steamProfile.response.players[10]' to access the 'personastate' would cause an error.  Finally, we can now call the specific item in the element and obtain it's value.</p>  
-
-            <p><code>console.log(num + ' = ' + status[num]);</code><br />
-            This is just a simple console.log call to help illustrate the ability to extract information from a JSON object.  If you open up the developer tools for your specific browser and view the console, you should see <code>0 = Offline</code> logged.
-
-            <p><code>document.getElementById('status').innerHTML = status[num];</code><br />
-            The last step in this code is to take the newly obtained values and send it to the HTML page to be displayed.  Here we use the HTML DOM getElementByID() method.  This will return the assigned value to the element that has the ID of 'status' and will send it as HTML content with the .innerHTML property.</p>
-
-            <p><code>var status = ["Offline", "Online", "Busy", "Away", "Looking to trade", "Looking to play"];</code><br />
-            You may have noticed that the value that was assigned was 'status[num]', but the value obtained from the JSON object was assigned to 'num' itself.  Being the good Web Developer I am, I read the documentation for this specific API call and learned that each integer value has a specific meaning.  So I created an array of strings with each string placed in the position equal to it's defined integer value, and the value of num will determine which string to display.
-
             <pre>
               window.onload = function(){
 
@@ -218,11 +345,33 @@
               console.log(country); // displays "US" to console
               document.getElementById('location').innerHTML = country; //sends country to html
               }
-              </pre>
+            </pre>
 
-              <script src="json.js"></script>
+            <p>Okay, above is the JavaScript code that uses the JSON response, pulls desired information, and sends it to the HTML page.  So let's break it down.</p>
+
+            <p><code>window.onload = function(){}</code><br />
+            This assigns a function call and the code within it will be executed upon the loading of the window</p>
+
+            <p><code>var steamProfile = {JSON Object};</code><br />
+            In order to access the JSON Object, it is assigned to a variable 'steamProfile'.  However, it is still not entirely useful.  We want to access specific elements not just the JSON object as a whole.</p>
+
+            <p><code>var num = steamProfile.response.players[0].personastate;</code><br />
+            Now we're getting somewhere.  Here we are able to access the specific element 'personastate' and assign it to another variable 'num' which we will use in just a sec.  Before I do that, i'd like to explain further how to access this object.  As you can see the variable we are accessing is 'steamProfile'.  Then we use the dot ('.') notation to access 'response'.  Once we get to 'players' we will use brackets ([ ]) to access a specific element like so, 'players[0]'.  You may ask why we are calling '[0]', the first element in the array.  Well if you look close enough 'players' only contains one element which is in turn our list of name/value pairs.  Attempting to call 'steamProfile.response.players[10]' to access the 'personastate' would cause an error.  Finally, we can now call the specific item in the element and obtain it's value.</p>  
+
+            <p><code>console.log(num + ' = ' + status[num]);</code><br />
+            This is just a simple console.log call to help illustrate the ability to extract information from a JSON object.  If you open up the developer tools for your specific browser and view the console, you should see <code>0 = Offline</code> logged.
+
+            <p><code>document.getElementById('status').innerHTML = status[num];</code><br />
+            The last step in this code is to take the newly obtained values and send it to the HTML page to be displayed.  Here we use the HTML DOM getElementByID() method.  This will return the assigned value to the element that has the ID of 'status' and will send it as HTML content with the .innerHTML property.</p>
+
+            <p><code>var status = ["Offline", "Online", "Busy", "Away", "Looking to trade", "Looking to play"];</code><br />
+            You may have noticed that the value that was assigned was 'status[num]', but the value obtained from the JSON object was assigned to 'num' itself.  Being the good Web Developer I am, I read the documentation for this specific API call and learned that each integer value has a specific meaning.  So I created an array of strings with each string placed in the position equal to it's defined integer value, and the value of num will determine which string to display.              
         
           <h2 id="nine">9. Conclusion</h2>
+          <p>And that is all there is too it...<br />
+          We have gone over the basics of APIs, JSON, AJAX, Steam's API Documentation and requirements, and even some methods for use.  Now you have the basic tools necessary to build some awesome applications. Good luck!</p>
+          
+          <script src="json.js"></script>
       </div>
     </div>
     <!--<script src="steamApi.js"></script>-->
